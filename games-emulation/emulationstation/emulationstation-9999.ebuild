@@ -80,7 +80,7 @@ KEYWORDS="~amd64"
 # Comprehensive list of any and all USE flags leveraged in the ebuild,
 # with some exceptions, e.g., ARCH specific flags like "amd64" or "ppc".
 # Not needed if the ebuild doesn't use any USE flags.
-IUSE="RPI64 GLES"
+IUSE="rpi64 mesagles"
 
 # A space delimited list of portage features to restrict. man 5 ebuild
 # for details.  Usually not needed.
@@ -156,6 +156,14 @@ src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}"/usr
 	)
+
+	 # Check if the RPI USE flag is set
+    use rpi && mycmakeargs+=( -DDRPI=ON )
+
+	# Check for RPI64 or MesaGles USE flag
+    if use rpi64 || use mesagles; then
+        mycmakeargs+=( -DUSE_MESA_GLES=ON )
+    fi
 
 	cmake_src_configure
 }
