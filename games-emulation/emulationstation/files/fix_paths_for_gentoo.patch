@@ -1,0 +1,43 @@
+Subject: [PATCH] fix paths for gentoo
+---
+Index: es-core/src/resources/Font.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/es-core/src/resources/Font.cpp b/es-core/src/resources/Font.cpp
+--- a/es-core/src/resources/Font.cpp	(revision 6b4281ac9feb3e8a788977eb6d9135656d02ce38)
++++ b/es-core/src/resources/Font.cpp	(date 1733949290566)
+@@ -261,9 +261,9 @@
+ 	// Linux
+ 
+ 	const char* paths[] = {
+-		"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+-		"/usr/share/fonts/truetype/freefont/FreeMono.ttf",
+-		"/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf" // japanese, chinese, present on Debian
++		"/usr/share/fonts/dejavu/DejaVuSans.ttf",
++		"/usr/share/fonts/freefont/FreeMono.ttf",
++		"/usr/share/fonts/droid/DroidSansFallback.ttf" // japanese, chinese, present on Debian
+ 	};
+ 
+ 	std::vector<std::string> fontPaths;
+Index: es-core/src/resources/ResourceManager.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/es-core/src/resources/ResourceManager.cpp b/es-core/src/resources/ResourceManager.cpp
+--- a/es-core/src/resources/ResourceManager.cpp	(revision 6b4281ac9feb3e8a788977eb6d9135656d02ce38)
++++ b/es-core/src/resources/ResourceManager.cpp	(date 1733950817220)
+@@ -27,6 +27,11 @@
+ 	{
+ 		std::string test;
+ 
++		// Check in /usr/share/emulationstation/resources
++		test = "/usr/share/emulationstation/resources/" + path.substr(2);
++		if(Utils::FileSystem::exists(test))
++			return test;
++
+ 		// check in homepath
+ 		test = Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" + &path[2];
+ 		if(Utils::FileSystem::exists(test))
