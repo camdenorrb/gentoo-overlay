@@ -158,7 +158,7 @@ src_configure() {
 	)
 
 	 # Check if the RPI USE flag is set
-    use rpi && mycmakeargs+=( -DDRPI=ON )
+    use rpi64 && mycmakeargs+=( -DDRPI=ON )
 
 	# Check for RPI64 or MesaGles USE flag
     if use rpi64 || use mesagles; then
